@@ -1,24 +1,25 @@
 {
-    "name": "worker-threads-task-processor",
-    "version": "1.0.0",
-    "description": "Sistema de procesamiento de tareas usando Worker Threads",
-    "main": "src/main.js",
-    "scripts": {
-        "start": "node src/main.js",
-        "dev": "nodemon src/main.js"
-    },
-    "keywords": [
-        "worker-threads",
-        "nodejs",
-        "concurrent",
-        "tasks"
-    ],
-    "author": "Tu Nombre",
-    "license": "MIT",
-    "engines": {
-        "node": ">=12.0.0"
-    },
-    "devDependencies": {
-        "nodemon": "^3.0.1"
-    }
+  "name": "worker-threads-task-processor",
+  "version": "1.0.0",
+  "description": "Sistema de procesamiento de tareas usando Worker Threads",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "dev": "nodemon src/main.js"
+  },
+  "keywords": [
+    "worker-threads",
+    "nodejs",
+    "concurrent",
+    "tasks"
+  ],
+  "author": "edwin andres legro <maxedwwin@gmail.com>",
+  "license": "MIT",
+  "packageManager": "pnpm@10.5.2",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }
