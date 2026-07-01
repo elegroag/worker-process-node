@@ -1,25 +1,28 @@
 {
-  "name": "worker-threads-task-processor",
+  "name": "pm2-task-runner",
   "version": "1.0.0",
-  "description": "Sistema de procesamiento de tareas usando Worker Threads",
-  "main": "src/main.js",
+  "description": "PM2 service for running scheduled Python and PHP scripts",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node src/main.js",
-    "dev": "nodemon src/main.js"
+    "start": "pm2 start src/ecosystem.config.js",
+    "stop": "pm2 stop task-runner",
+    "restart": "pm2 restart task-runner",
+    "logs": "pm2 logs task-runner",
+    "monit": "pm2 monit",
+    "delete": "pm2 delete task-runner"
   },
-  "keywords": [
-    "worker-threads",
-    "nodejs",
-    "concurrent",
-    "tasks"
-  ],
-  "author": "edwin andres legro <maxedwwin@gmail.com>",
-  "license": "MIT",
-  "packageManager": "pnpm@10.5.2",
-  "engines": {
-    "node": ">=22.0.0"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "dependencies": {
+    "moment-timezone": "^0.5.48",
+    "mysql2": "^3.14.1",
+    "node-cron": "^3.0.3",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "dotenv": "^17.1.0",
+    "pm2": "^5.4.3"
   }
 }
