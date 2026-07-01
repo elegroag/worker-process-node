@@ -1,5 +1,5 @@
 export type TaskStatus = 'pending' | 'running' | 'completed' | 'failed';
-export type ScriptType = 'python' | 'php';
+export type ScriptType = 'python' | 'php' | 'api';
 
 export interface Task {
   id: number;
