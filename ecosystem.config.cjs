@@ -15,9 +15,11 @@ module.exports = {
       max_memory_restart: '1G',
       // Las credenciales se inyectan desde el entorno (cargadas con dotenv).
       env: {
-        NODE_ENV: 'production'
-        // DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, TIMEZONE, LOG_LEVEL
-        // se leen del proceso; aquí no se setean ni se exponen.
+        NODE_ENV: 'production',
+        DB_HOST: process.env.DB_HOST || '',
+        DB_USER: process.env.DB_USER || '',
+        DB_PASSWORD: process.env.DB_PASSWORD || '',
+        DB_NAME: process.env.DB_NAME || '',
       },
       error_file: './logs/pm2-err.log',
       out_file: './logs/pm2-out.log',
@@ -32,12 +34,7 @@ module.exports = {
       listen_timeout: 3000,
       autorestart: true,
       watch_delay: 1000,
-      ignore_watch: [
-        'node_modules',
-        'dist',
-        'logs',
-        '*.log'
-      ]
-    }
-  ]
+      ignore_watch: ['node_modules', 'dist', 'logs', '*.log'],
+    },
+  ],
 };

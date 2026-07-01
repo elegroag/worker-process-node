@@ -44,7 +44,11 @@ const ecosystem: EcosystemConfig = {
       max_memory_restart: '1G',
       interpreter: 'tsx',
       env: {
-        NODE_ENV: 'development'
+        NODE_ENV: process.env.NODE_ENV || 'production',
+        DB_HOST: process.env.DB_HOST || '',
+        DB_USER: process.env.DB_USER || '',
+        DB_PASSWORD: process.env.DB_PASSWORD || '',
+        DB_NAME: process.env.DB_NAME || ''
       },
       error_file: './logs/pm2-err.log',
       out_file: './logs/pm2-out.log',
