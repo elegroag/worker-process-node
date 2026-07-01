@@ -1,3 +1,9 @@
+// Configuración de PM2 con `tsx` interpreter (modo desarrollo).
+//
+// IMPORTANTE: este archivo NUNCA debe contener credenciales. Las variables
+// de entorno se cargan desde `.env` (excluido del repositorio) usando
+// `dotenv -e .env -- pm2 start ecosystem.config.ts` desde los scripts npm.
+
 interface AppConfig {
   name: string;
   script: string;
@@ -38,11 +44,7 @@ const ecosystem: EcosystemConfig = {
       max_memory_restart: '1G',
       interpreter: 'tsx',
       env: {
-        NODE_ENV: 'production',
-        DB_HOST: 'REDACTED_DB_HOST',
-        DB_USER: 'root',
-        DB_PASSWORD: 'REDACTED_DB_PASSWORD',
-        DB_NAME: 'comfaca_giro_real'
+        NODE_ENV: 'development'
       },
       error_file: './logs/pm2-err.log',
       out_file: './logs/pm2-out.log',
