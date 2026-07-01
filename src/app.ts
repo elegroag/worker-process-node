@@ -1,21 +1,22 @@
-const logger = require('../logger.js');
-require('dotenv').config();
-const ProcessTasks = require('./infrastructure/ProcessTasks.js');
-const getDbPool = require('./database/dbConnection.js');
+import dotenv from 'dotenv';
+import logger from '../logger.js';
+import ProcessTasks from './infrastructure/ProcessTasks.js';
+import { getDbPool } from './database/dbConnection.js';
+import type { Pool } from 'mysql2/promise';
+
+dotenv.config();
 
 let isRunning = true;
 let currentCycle = 0;
-let pool = getDbPool();
+const pool: Pool = getDbPool();
 
-// Función principal del servicio - Bucle infinito
-async function main() {
+async function main(): Promise<void> {
   logger.info('Iniciando servicio PM2 en bucle infinito');
-  // Bucle infinito para consultar tareas
+
   while (isRunning) {
     try {
       currentCycle++;
 
-      // Log cada 100 ciclos para confirmar que está funcionando
       if (currentCycle % 100 === 0) {
         logger.info(`Ciclo ${currentCycle} - Servicio funcionando correctamente`);
       }
@@ -23,27 +24,22 @@ async function main() {
       const processTasks = ProcessTasks();
       await processTasks.execute();
 
-      // Esperar 2 minuto antes de la siguiente consulta
       const minu2 = 60000 * 2;
-      await new Promise(resolve => setTimeout(resolve, minu2));
-
+      await new Promise<void>((resolve) => setTimeout(resolve, minu2));
     } catch (error) {
       logger.error('Error en el bucle principal:', error);
 
-      // Esperar 30 segundos antes de reintentar en caso de error
       const minu3 = 60000 * 3;
-      await new Promise(resolve => setTimeout(resolve, minu3));
+      await new Promise<void>((resolve) => setTimeout(resolve, minu3));
     }
   }
 }
 
-// Manejar cierre graceful
 process.on('SIGINT', async () => {
   logger.info('Recibida señal SIGINT, cerrando servicio...');
   isRunning = false;
 
-  // Dar tiempo para que termine el ciclo actual
-  await new Promise(resolve => setTimeout(resolve, 5000));
+  await new Promise<void>((resolve) => setTimeout(resolve, 5000));
 
   if (pool) {
     await pool.end();
@@ -55,8 +51,7 @@ process.on('SIGTERM', async () => {
   logger.info('Recibida señal SIGTERM, cerrando servicio...');
   isRunning = false;
 
-  // Dar tiempo para que termine el ciclo actual
-  await new Promise(resolve => setTimeout(resolve, 5000));
+  await new Promise<void>((resolve) => setTimeout(resolve, 5000));
 
   if (pool) {
     await pool.end();
@@ -64,19 +59,17 @@ process.on('SIGTERM', async () => {
   process.exit(0);
 });
 
-// Manejar errores no capturados
-process.on('uncaughtException', (error) => {
+process.on('uncaughtException', (error: Error) => {
   logger.error('Error no capturado:', error);
   process.exit(1);
 });
 
-process.on('unhandledRejection', (reason, promise) => {
+process.on('unhandledRejection', (reason: unknown) => {
   logger.error('Promesa rechazada no manejada:', reason);
   process.exit(1);
 });
 
-// Iniciar el servicio
-main().catch((error) => {
+main().catch((error: Error) => {
   logger.error('Error fatal:', error);
   process.exit(1);
 });

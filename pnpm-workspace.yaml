@@ -1,0 +1,6 @@
+# pnpm v11 — el campo "onlyBuiltDependencies" se reemplazó por "allowBuilds"
+# https://pnpm.io/settings#allowbuilds
+allowBuilds:
+  esbuild: true
+  "@swc/core": true
+  core-js: true

@@ -1,7 +1,9 @@
-const winston = require('winston');
+import winston from 'winston';
+import dotenv from 'dotenv';
 
-//  Configuración del logger
-const logger = winston.createLogger({
+dotenv.config();
+
+const logger: winston.Logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: winston.format.combine(
     winston.format.timestamp(),
@@ -21,4 +23,4 @@ const logger = winston.createLogger({
   ],
 });
 
-module.exports = logger;
+export default logger;
